@@ -1,2 +1,3 @@
-# vibe_music_app
- Music and Good Vibes
+# Project Vibe
+
+Developing an elegant React.js Music Application. 
