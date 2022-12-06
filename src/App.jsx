@@ -15,8 +15,8 @@ const App = () => {
 
         <div className="px-6 h-[calc(100vh-72px)] overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col-reverse">
           <div className="flex-1 h-fit pb-40">
-          {/* General route structure */}
-            <Routes> 
+            {/* General route structure */}
+            <Routes>
               <Route path="/" element={<Discover />} /> {/* Home page */}
               <Route path="/top-artists" element={<TopArtists />} />
               <Route path="/top-charts" element={<TopCharts />} />
