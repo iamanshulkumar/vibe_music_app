@@ -12,12 +12,36 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 //import { TopCharts } from '../pages';
 
-const TopChartCard = ({ song, i }) => (
+// Top Chart Card
+const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handlePlayClick }) => (
   <div className="w-full flex flex-row items-center hover:bg-[#4c426e] py-2 p-4 rounded-lg cursor-pointer mb-2">
+
+    {/* Number list */}
     <h3 className="font-bold text-base text-white mr-3">{i + 1}.</h3>
     <div className="flex-1 flex flex-row justify-between items-center">
 
+      {/* Cover art */}
+      <img src={song?.images?.coverart} alt={song?.title} className="w-20 h-20 rounded-lg" />
+
+      {/* song name list */}
+      <div className="flex-1 flex flex-col justify-center mx-3">
+        <Link to={`/songs/${song.key}`}>
+          <p className="text-xl font-bold text-white">{song?.title}</p>
+        </Link>
+
+        {/* artists name list */}
+        <Link to={`/artists/${song?.artists[0].adamid}`}>
+          <p className="text-base text-gray-300 mt-1">{ song?.subtitle }</p>
+        </Link>
+      </div>
     </div>
+    <PlayPause 
+      isPlaying={isPlaying}
+      activeSong={activeSong}
+      song={song}
+      handlePause={handlePauseClick}
+      handlePlay={handlePlayClick}
+    />
   </div>
 );
 
@@ -38,7 +62,7 @@ const TopPlay = () => {
     dispatch(playPause(false));
   };
 
-  const handlePlayClick = () => {
+  const handlePlayClick = (song, i) => {
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
   };
@@ -61,12 +85,16 @@ const TopPlay = () => {
               key={song.key}
               song={song}
               i={i}
+              isPlaying={isPlaying}
+              activeSong={activeSong}
+              handlePauseClick={handlePauseClick}
+              handlePlayClick={() => handlePlayClick(song, i)}
             />
           ))}
         </div>
       </div>
 
-      {/* top artists section */}
+      {/* top artists block */}
       <div className="w-full flex flex-col mt-8">
         <div className="flex flex-row justify-between items-center">
           <h2 className="text-white font-bold text-2xl">Top Artists</h2>
@@ -75,7 +103,7 @@ const TopPlay = () => {
           </Link>
         </div>
 
-        {/* slider */}
+        {/* top artists slider */}
         <Swiper
           slidesPerView="auto"
           spaceBetween={15}
@@ -85,7 +113,8 @@ const TopPlay = () => {
           modules={[FreeMode]}
           className="mt-4"
         >
-          {/* image shape */}
+
+          {/* top artists image shape */}
           {topPlays?.map((song, i) => (
             <SwiperSlide
               key={song?.key}
