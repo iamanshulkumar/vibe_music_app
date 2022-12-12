@@ -10,11 +10,10 @@ import { useGetTopChartsQuery } from '../redux/services/shazamCore';
 
 import 'swiper/css';
 import 'swiper/css/free-mode';
-//import { TopCharts } from '../pages';
 
 // Top Chart Card
 const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handlePlayClick }) => (
-  <div className="w-full flex flex-row items-center hover:bg-[#4c426e] py-2 p-4 rounded-lg cursor-pointer mb-2">
+  <div className={`w-full flex flex-row items-center hover:bg-[#4c426e] ${activeSong?.title === song?.title ? 'bg-[#4c426e]' : 'bg-transparent'} py-2 p-4 rounded-lg cursor-pointer mb-2`}>
 
     {/* Number list */}
     <h3 className="font-bold text-base text-white mr-3">{i + 1}.</h3>
@@ -35,7 +34,9 @@ const TopChartCard = ({ song, i, isPlaying, activeSong, handlePauseClick, handle
         </Link>
       </div>
     </div>
-    <PlayPause 
+
+    {/* Play pause button */}
+    <PlayPause
       isPlaying={isPlaying}
       activeSong={activeSong}
       song={song}
@@ -74,7 +75,7 @@ const TopPlay = () => {
         <div className="flex flex-row justify-between items-center">
           <h2 className="text-white font-bold text-2xl">Top Charts</h2>
           <Link to="/top-charts">
-            <p className="text-gray-300">See More</p>
+            <p className="text-gray-300 text-base cursor-pointer">See More</p>
           </Link>
         </div>
 
@@ -99,7 +100,7 @@ const TopPlay = () => {
         <div className="flex flex-row justify-between items-center">
           <h2 className="text-white font-bold text-2xl">Top Artists</h2>
           <Link to="/top-artists">
-            <p className="text-gray-300">See More</p>
+            <p className="text-gray-300 text-base cursor-pointer">See More</p>
           </Link>
         </div>
 
@@ -115,19 +116,18 @@ const TopPlay = () => {
         >
 
           {/* top artists image shape */}
-          {topPlays?.map((song, i) => (
+          {topPlays?.slice(0, 5).map((artists) => (
             <SwiperSlide
-              key={song?.key}
+              key={artists?.key}
               style={{ width: '25%', height: 'auto' }}
               className="shadow-lg rounded-full animate-slideright"
             >
-              <Link to={`/artists/${song?.artists[0].adamid}`}>
-                <img src={song?.images.background} alt="name" className="rounded-full w-full object-cover" />
+              <Link to={`/artists/${artists?.artists[0].adamid}`}>
+                <img src={artists?.images.background} alt="name" className="rounded-full w-full object-cover" />
               </Link>
             </SwiperSlide>
           ))}
         </Swiper>
-
       </div>
     </div>
   );
