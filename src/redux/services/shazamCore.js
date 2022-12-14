@@ -18,6 +18,7 @@ export const shazamCoreApi = createApi({
     // having issue in fetching getArtistDetails as v1 is deprecated
     getArtistDetails: builder.query({ query: (artistId) => `/v2/artists/details?artist_id=${artistId}` }),
     getSongsByCountry: builder.query({ query: (countryCode) => `/v1/charts/country?country_code=${countryCode}` }),
+    getSongBySearch: builder.query({ query: (searchTerm) => `/v1/search/multi?search_type=SONGS_ARTISTS&query=${searchTerm}` }),
   }),
 });
 
@@ -28,4 +29,5 @@ export const {
   useGetSongRelatedQuery,
   useGetArtistDetailsQuery, // still not working
   useGetSongsByCountryQuery,
+  useGetSongBySearchQuery,
 } = shazamCoreApi;
