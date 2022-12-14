@@ -23,7 +23,7 @@ const ArtistDetails = () => {
       />
 
       <RelatedSongs
-        data={Object.values(artistData?.songs)}
+        data={Object.values(artistData?.songs)} // having issue with converting undefined to object
         artistId={artistId}
         isPlaying={isPlaying}
         activeSong={activeSong}
